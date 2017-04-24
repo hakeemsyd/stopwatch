@@ -8,6 +8,7 @@ public class Watch implements Runnable{
      interface WatchListener{
          void onTimeUpdate(long millis);
     }
+
     private long mCurrentTime;
     private long mStartTime;
     private boolean mPaused;
@@ -16,7 +17,6 @@ public class Watch implements Runnable{
     private static Watch mInstance;
 
     private Watch(){
-
     }
 
     public static Watch getInstance(){
@@ -35,10 +35,16 @@ public class Watch implements Runnable{
 
     public void pause(boolean paused){
         mPaused = paused;
+        if(mStopped && !paused){
+            mStopped = false;
+            mPaused = false;
+        }
     }
 
     public void stop(){
         mStopped = true;
+        mStartTime = 0;
+        mCurrentTime = 0;
     }
 
     @Override
@@ -55,7 +61,7 @@ public class Watch implements Runnable{
                 }
 
                 if (!mPaused) {
-                    mCurrentTime += mStartTime - System.currentTimeMillis();
+                    mCurrentTime = mCurrentTime + (System.currentTimeMillis() - mStartTime);
                 } else {
                     mStartTime = System.currentTimeMillis();
                 }

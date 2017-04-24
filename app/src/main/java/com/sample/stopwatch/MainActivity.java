@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity implements Presenter.Present
             if (mIsPlaying) {
                 mIsPlaying = false;
                 mPlayPause.setText(R.string.btn_play);
-                mPresenter.pause();
+                mPresenter.pause(true);
             } else {
                 mIsPlaying = true;
                 mPlayPause.setText(R.string.btn_pause);
-                mPresenter.start();
+                mPresenter.pause(false);
             }
         }
     };
@@ -63,11 +63,7 @@ public class MainActivity extends AppCompatActivity implements Presenter.Present
     }
 
     @Override
-    public void updateTime(long millis) {
-        mTime.setText(millisToStringTime(millis));
-    }
-
-    private String millisToStringTime(long millis) {
-        return "";
+    public TextView getTextView() {
+        return mTime;
     }
 }
