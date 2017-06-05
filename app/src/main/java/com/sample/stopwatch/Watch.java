@@ -1,10 +1,13 @@
 package com.sample.stopwatch;
 
+import android.util.Log;
+
 /**
  * Created by Hakeem on 4/23/17.
  */
 
 public class Watch implements Runnable{
+
      interface WatchListener{
          void onTimeUpdate(long millis);
     }
@@ -51,7 +54,7 @@ public class Watch implements Runnable{
     public void run() {
         mStartTime = System.currentTimeMillis();
         Watch.this.onUpdate(0);
-
+        long millis = 0 ;
         while (true) {
             try {
                 Thread.sleep(1);
@@ -60,9 +63,11 @@ public class Watch implements Runnable{
                     break;
                 }
 
+                long now = System.currentTimeMillis();
                 if (!mPaused) {
-                    mCurrentTime = mCurrentTime + (System.currentTimeMillis() - mStartTime);
+                    mCurrentTime = millis + (now - mStartTime);
                 } else {
+                    millis = mCurrentTime;
                     mStartTime = System.currentTimeMillis();
                 }
 
@@ -76,6 +81,7 @@ public class Watch implements Runnable{
 
     public void onUpdate(long millis){
         if(mListener != null){
+            //Log.i("", "OnUpdate: " + millis);
             mListener.onTimeUpdate(millis);
         }
     }

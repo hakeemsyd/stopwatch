@@ -53,8 +53,9 @@ public class Presenter implements Watch.WatchListener {
 
     @Override
     public void onTimeUpdate(final long millis) {
-        final TextView text = mView.getTextView();
+
         if (mView != null) {
+            final TextView text = mView.getTextView();
             text.post(new Runnable() {
                 @Override
                 public void run() {
@@ -70,7 +71,7 @@ public class Presenter implements Watch.WatchListener {
         long minutes = millis / (1000 * 60);
         millis = millis - (minutes * 1000 * 60);
         long seconds = millis / 1000;
-        millis = millis - seconds * 10000;
-        return hours + ":" + minutes + ":" + seconds + ":" + millis;
+
+        return hours + ":" + minutes + ":" + seconds;
     }
 }
